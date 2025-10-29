@@ -15,9 +15,23 @@ headers = {
 #if we get 200 respons that mean we got the information / if its 403 it means accese denied 
 
 html_text = requests.get('https://www.goodreads.com/review/list/5387467-mohammad-efazati', headers=headers ).text
-
 soup = BeautifulSoup(html_text, "lxml")
-books = soup.find_all("tr", class_="bookalike review")
-for book in books:
-    book_name = book.find('a', title=True)
-    print(book_name['title'])
+
+books = soup.find_all("tr", class_="bookalike review")  # go in tr tag that are boxes with that class
+for book in books : # Iterate on all of those boks
+
+    book_name = book.find('a', title=True)['title']  #find their name that are in a tags
+
+    author_tag = book.find("td", class_='field author') #find td tags and then find a tags inside those td tags
+    authorname  = author_tag.find('a').text
+
+    date_tag = book.find('span', class_='date_read_value') # Since there is none datetime in the web we have to give it a rule so if there was none just bring back none 
+    read_date = date_tag.get_text(strip=True) if date_tag else None
+    
+    if read_date is not None:
+        print(f'''
+    Title :{book_name}
+    Author :{authorname}
+    readDate:{read_date} 
+    _____
+    ''')
