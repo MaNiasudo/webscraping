@@ -7,5 +7,5 @@ with open ("index.html", "r") as html_file : # Request where  you want to scrape
     course_cards = soup.find_all("div", class_='card')
     for course in course_cards:
         card_name = course.h5.text
-        card_price = course.a.text
-        print(card_name,card_price)
+        card_price = course.a.text.split()[-1]
+        print(card_name,"costs",card_price)
