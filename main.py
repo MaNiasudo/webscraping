@@ -1,5 +1,10 @@
 from bs4 import BeautifulSoup
+import datetime
 import requests
+
+today_date = datetime.datetime.now()
+today_month = today_date.strftime("%b")
+
 
 # Since we were getting 403 errors from the website then we had to give it a User agent header 
 # otherwise we didn't have to write this code
@@ -34,4 +39,12 @@ for book in books : # Iterate on all of those boks
     Author :{authorname}
     readDate:{read_date} 
     _____
-    ''')
+    ''')  
+        if read_date is not None and  today_month in read_date :
+            print(f'''               @@@@@@@@@@
+                This month reads
+            Title :{book_name}
+            Author :{authorname}s
+            readDate:{read_date} 
+            _____
+            ''')
