@@ -4,7 +4,8 @@ with open ("index.html", "r") as html_file : # Request where  you want to scrape
     content = html_file.read()
 
     soup = BeautifulSoup(content, "lxml") # Make a soup curser i guess?
-    courses_html_tags = soup.find_all('h5') #Search for tag and use find all to find all the tags not only first tag
-    prices = soup.find_all('a') 
-    for price,course in zip(prices,courses_html_tags): #zip them so we dont face valueerror
-        print(price.text,course.text)
+    course_cards = soup.find_all("div", class_='card')
+    for course in course_cards:
+        card_name = course.h5.text
+        card_price = course.a.text
+        print(card_name,card_price)
